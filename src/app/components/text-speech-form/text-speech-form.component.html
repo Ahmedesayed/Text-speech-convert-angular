@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="onPlay()">
+    <app-select [options]="vOptions" [title]="'Voices'" [label]="'Select Voice'" [formControlName]="'voice'" [formGroup]="form"></app-select>
+    <app-text-area [title]="'Enter your own text in English'" [validators]="[_validators.required]" [label]="'Enter text'" [formControlName]="'text'" [formGroup]="form"></app-text-area>
+    <div class="flex-row margin-top">
+        <div class="flex-col" style="flex:3">
+            <mat-label>Adjust Speed ({{playbackRate}}x)</mat-label>
+            <div class="flex-row start">
+                <mat-label>0.1x</mat-label>
+                <mat-slider valueText="x" thumbLabel="thumbLabel" min="0.1" max="2" step="0.1" value="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="playbackRate"></mat-slider>
+                <mat-label>2x</mat-label>
+            </div>
+        </div>
+
+        <button  style="flex:1" mat-raised-button="mat-raised-button" color="primary" (click)="onPlay()" [disabled]="loading">
+            <mat-icon *ngIf="!loading" >play_arrow</mat-icon>
+            <mat-progress-spinner style="margin:0 auto;" diameter="35" mode="indeterminate" color="primary" *ngIf="loading"></mat-progress-spinner>
+        </button>
+    </div>
+
+</form>

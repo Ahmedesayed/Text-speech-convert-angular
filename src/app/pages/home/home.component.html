@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+    <span>Text To Speech</span>
+</mat-toolbar>
+<div class="home-pg-content">
+    <app-text-speech-form (onTextSpeech)="addToList()"></app-text-speech-form>
+
+    <mat-list>
+        <mat-list-item  *ngFor="let item of textSpeechForm?.recordings" [id]="'record-'+item.fileName">
+            <button mat-icon-button color="primary" (click)="textSpeechForm?.replayAudio(item.fileUrl)">
+                <mat-icon >play_arrow</mat-icon>
+            </button>
+             <button mat-icon-button color="warn" (click)="textSpeechForm?.deleteRecord(item)">
+                <mat-icon >delete</mat-icon>
+             </button>
+            <h3 matLine>
+                {{item.fileName}}
+            </h3>
+            <p matLine>
+                {{item.text}}
+            </p>
+        </mat-list-item>
+    </mat-list>
+</div>
+
+
+<footer>
+    <p>Copyright &copy; 2020 The Golden Roast.</p>
+</footer>

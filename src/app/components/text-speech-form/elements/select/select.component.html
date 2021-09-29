@@ -1,0 +1,11 @@
+
+<h4>{{title}}</h4>
+<mat-form-field floatLabel="auto" appearance="fill">
+  <mat-label>{{label}}</mat-label>
+  <mat-select [formControl]="formControl" name="voice">
+    <mat-option *ngFor="let optn of options" [value]="optn.value">
+      {{optn.viewValue}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="formControl?.hasError('required')">Please choose a voice</mat-error>
+</mat-form-field>

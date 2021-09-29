@@ -1,0 +1,30 @@
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-form-field{
+    width: 100%;
+}
+
+.margin-top{
+    margin-top: 12px;
+}
+
+.flex-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &.start{
+        justify-content: start;
+    }
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-slider-horizontal{
+    min-width: 50% !important;
+}

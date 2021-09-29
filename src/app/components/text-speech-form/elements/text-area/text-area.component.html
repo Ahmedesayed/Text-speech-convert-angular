@@ -1,0 +1,15 @@
+
+<h4>{{title}}</h4>
+<mat-form-field appearance="fill">
+    <mat-label class="required" >{{label}}</mat-label>
+    <textarea [maxlength]="maxLength" rows="4" [formControl]="formControl" matInput></textarea>
+  <mat-error *ngIf="formControl.invalid && (formControl.dirty || formControl.touched) && formControl.getError('required')">Please enter text to convert</mat-error>
+  <mat-hint >
+      <mat-label *ngIf="!formControl.value" >
+        Max characters allowed is only 50
+      </mat-label>
+      <mat-label *ngIf="formControl.value" >
+       {{formControl.value.length}} of (50)
+      </mat-label>
+  </mat-hint>
+</mat-form-field>

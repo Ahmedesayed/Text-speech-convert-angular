@@ -1,0 +1,10 @@
+{
+    "/instances": {
+      "target": "https://api.eu-de.text-to-speech.watson.cloud.ibm.com",
+      "secure": true,
+      "pathRewrite": {
+      "^/instances": ""
+    },
+      "changeOrigin": true
+    }
+  }
