@@ -1,5 +1,5 @@
 import { ITextSpeech } from './../../models/IText-Speech';
-import { EventEmitter, Input } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { ITextSpeechResponse } from './../../models/protocols/IText-speech-response';
 import { Validators } from '@angular/forms';
 import { TextSpeechApiService } from './../../services/text-speech-api.service';

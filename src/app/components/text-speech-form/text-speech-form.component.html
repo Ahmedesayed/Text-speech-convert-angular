@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <button  style="flex:1" mat-raised-button="mat-raised-button" color="primary" (click)="onPlay()" [disabled]="loading">
+        <button  style="flex:1" mat-raised-button="mat-raised-button" color="primary" type="submit" [disabled]="loading">
             <mat-icon *ngIf="!loading" >play_arrow</mat-icon>
             <mat-progress-spinner style="margin:0 auto;" diameter="35" mode="indeterminate" color="primary" *ngIf="loading"></mat-progress-spinner>
         </button>

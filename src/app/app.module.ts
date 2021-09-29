@@ -24,11 +24,11 @@ import { CacheInterceptor } from './interceptors/cache.interceptor';
     MatSelectModule,
   ],
   providers: [
-  //   {
-  //     provide: HTTP_INTERCEPTORS,
-  //     useClass: CacheInterceptor,
-  //     multi: true
-  // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
+  }
   ],
   bootstrap: [AppComponent]
 })
