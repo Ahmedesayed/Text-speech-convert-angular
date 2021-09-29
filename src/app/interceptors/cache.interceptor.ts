@@ -7,7 +7,7 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { share, tap } from 'rxjs/operators';
+import { tap, shareReplay } from 'rxjs/operators';
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
@@ -16,7 +16,6 @@ export class CacheInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     if (req.headers.get("reset")) {
       this.cache.delete(req)
     }
@@ -29,8 +28,9 @@ export class CacheInterceptor implements HttpInterceptor {
           if (stateEvent instanceof HttpResponse) {
             this.cache.set(req, stateEvent.clone())
           }
-        })
-      ).pipe(share())
+        }),
+        shareReplay(1)
+      )
     }
   }
 }

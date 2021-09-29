@@ -67,7 +67,7 @@ export class TextSpeechFormComponent implements OnInit {
 
   async onSuccess(rslt: ITextSpeechResponse) {
     let fileUrl = window.URL.createObjectURL(rslt.file);
-    this.recordings.push({ text: rslt.text, fileUrl, fileName: rslt.fileName,date:Date.now() });
+    this.recordings.push({ text: rslt.text, fileUrl, fileName: rslt.fileName, date: Date.now() });
     this.onTextSpeech.emit();
     await this.replayAudio(fileUrl);
   }
@@ -79,8 +79,8 @@ export class TextSpeechFormComponent implements OnInit {
     await this.audio.play();
   }
 
-  deleteRecord(record:ITextSpeech){
-    this.recordings = this.recordings.filter((e)=> record.fileName !== e.fileName)
+  deleteRecord(record: ITextSpeech) {
+    this.recordings = this.recordings.filter((e) => record.fileName !== e.fileName)
   }
 
   isDuplicate(text: string) {
@@ -92,17 +92,17 @@ export class TextSpeechFormComponent implements OnInit {
   }
 
   scrollToElement(id: string) {
-    let el = document.getElementById('record-'+id);
+    let el = document.getElementById('record-' + id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       this.markAsFocused(el);
     }
   }
 
-  markAsFocused(el:HTMLElement){
+  markAsFocused(el: HTMLElement) {
     el.style.border = '2px solid #3f51b5'
     setTimeout(() => {
-     if(el) el.style.border = '0'
+      if (el) el.style.border = '0'
     }, 4000);
   }
 
