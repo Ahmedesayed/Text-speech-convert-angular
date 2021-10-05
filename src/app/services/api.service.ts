@@ -1,6 +1,7 @@
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TEXT_SPEECH_API_URL, API_AUTH } from '../constant/config';
+import {  API_AUTH } from '../constant/config';
 import { catchError, finalize, mergeMap, tap } from 'rxjs/operators'
 import { AlertsService } from './alerts.service';
 import { Observable, throwError, timer } from 'rxjs';
@@ -17,7 +18,7 @@ export class ApiService {
   get<T>(path: string, params?: any) {
     let hParams: HttpParams = new HttpParams();
     params ? hParams.appendAll(params) : {};
-    return this.httpClient.get<T>(TEXT_SPEECH_API_URL + path, {
+    return this.httpClient.get<T>(environment.apiUrl + path, {
       headers:
         new HttpHeaders({
           'authorization': 'Basic ' + btoa(API_AUTH),
@@ -30,7 +31,7 @@ export class ApiService {
   }
 
   post<T>(path: string, params: {}) {
-    return this.httpClient.post<T>(TEXT_SPEECH_API_URL + path, params, {
+    return this.httpClient.post<T>(environment.apiUrl + path, params, {
       headers:
         new HttpHeaders({
           'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export class ApiService {
 
   // for file responses
   postRfile(path: string, params: any, accept: string = 'audio/wav') {
-    return this.httpClient.post(TEXT_SPEECH_API_URL + path, params, {
+    return this.httpClient.post(environment.apiUrl + path, params, {
       headers:
         new HttpHeaders({
           'Accept': accept,

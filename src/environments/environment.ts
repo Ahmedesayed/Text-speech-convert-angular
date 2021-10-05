@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  environmentName: 'Debug',
+  apiUrl: 'https://api.eu-de.text-to-speech.watson.cloud.ibm.com/instances/1c82fb9a-af65-4882-95e4-730f81ef7ada/v1/'
 };
 
 /*
