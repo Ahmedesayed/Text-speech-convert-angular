@@ -19,7 +19,7 @@ export class TextSpeechApiService {
   getTextSpeech(text: string,voice ?:string) {
     let fileName = Date.now().toString();
     return this.api.postRfile(`synthesize?voice=${voice ? voice : DEFAULT_VOICE}`,{text}).pipe(tap((e)=>{
-      if(e) saveAs(e,fileName);
+      // if(e) saveAs(e,fileName);
     }),map((e)=>{
       let rslt : ITextSpeechResponse = {text,fileName:fileName+'.wav',file:e} 
       return rslt

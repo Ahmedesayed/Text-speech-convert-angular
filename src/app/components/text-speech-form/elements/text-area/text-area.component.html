@@ -4,6 +4,8 @@
     <mat-label class="required" >{{label}}</mat-label>
     <textarea [maxlength]="maxLength" rows="4" [formControl]="formControl" matInput></textarea>
   <mat-error *ngIf="formControl.invalid && (formControl.dirty || formControl.touched) && formControl.getError('required')">Please enter text to convert</mat-error>
+  <mat-error *ngIf="formControl.invalid && (formControl.dirty || formControl.touched) && formControl.getError('pattern')">Please enter english text</mat-error>
+
   <mat-hint >
       <mat-label *ngIf="!formControl.value" >
         Max characters allowed is only 50

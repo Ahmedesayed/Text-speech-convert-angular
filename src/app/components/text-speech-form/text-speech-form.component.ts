@@ -7,6 +7,9 @@ import { Component, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IVoice } from 'src/app/models/iVoice';
 import { IOption } from './elements/select/select.component';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-text-speech-form',
@@ -25,6 +28,7 @@ export class TextSpeechFormComponent implements OnInit {
   recordings: ITextSpeech[] = [];
   audio = new Audio();
   @Output() onTextSpeech: EventEmitter<ITextSpeech> = new EventEmitter();
+  $fsub: Subscription | undefined;;
 
   constructor(public txtSpch: TextSpeechApiService) { }
 
@@ -33,14 +37,40 @@ export class TextSpeechFormComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.subsFormChanges();
   }
 
-  async init() {
+  subsFormChanges(){
+    this.$fsub  = this.form.valueChanges.subscribe((e)=>{
+      this.checkTextVoiceValidation(e['voice'])
+    })
+  }
+
+  checkTextVoiceValidation(val : string){
+    val = val.toLowerCase();
+    if(val && val.includes('en')) this.setPatternValidator('text');
+    else if(val && !val.includes('en')) this.removePatternValidator('text')
+  }
+
+  setPatternValidator(control : string){
+    this.form.controls[control].setValidators(Validators.pattern(/^[a-z][a-z0-9]*$/i));
+  }
+
+  removePatternValidator(control:string){
+    this.form.controls[control].removeValidators(Validators.pattern(/^[a-z][a-z0-9]*$/i));
+  }
+
+  ngOnDestroy() {
+    if(this.$fsub) this.$fsub.unsubscribe();
+  }
+
+  init() {
     this.getVoices();
   }
 
+
   async getVoices() {
-    this.voices = await this.txtSpch.getSpeechVoices();
+    this.voices = await this.txtSpch.getSpeechVoices()
     this.vOptions = this.voices.map((e, index) => {
       return { id: index, value: e.name, viewValue: e.name }
     })
@@ -67,7 +97,7 @@ export class TextSpeechFormComponent implements OnInit {
 
   async onSuccess(rslt: ITextSpeechResponse) {
     let fileUrl = window.URL.createObjectURL(rslt.file);
-    this.recordings.push({ text: rslt.text, fileUrl, fileName: rslt.fileName, date: Date.now() });
+    this.recordings.push({ text: rslt.text, fileUrl, fileName: rslt.fileName, date: Date.now(), fileData: rslt.file });
     this.onTextSpeech.emit();
     await this.replayAudio(fileUrl);
   }
@@ -84,7 +114,7 @@ export class TextSpeechFormComponent implements OnInit {
   }
 
   isDuplicate(text: string) {
-    let index = this.recordings.findIndex((e) => e.text == text);
+    let index = this.recordings.findIndex((e) => e.text.toLowerCase() == text.toLowerCase());
     if (index == -1) return false;
     this.replayAudio(this.recordings[index].fileUrl);
     this.scrollToElement(this.recordings[index].fileName);

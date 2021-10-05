@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TEXT_SPEECH_API_URL, API_AUTH } from '../constant/config';
 import { catchError, finalize, mergeMap, tap } from 'rxjs/operators'
 import { AlertsService } from './alerts.service';
-import { Observable, of, throwError, timer } from 'rxjs';
+import { Observable, throwError, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
